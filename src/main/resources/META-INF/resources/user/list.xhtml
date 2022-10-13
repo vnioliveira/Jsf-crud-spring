@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+    </h:head>
+
+    <h:body style="margin-left:50px">
+        <h:form id="users">
+            <p:growl id="growl" sticky="true" />
+            <p:dataTable id="userList" var="user" value="#{userService.users}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{user.id}"/>
+                </p:column>
+
+                <p:column headerText="First name">
+                    <p:inputText id="firstNameInput" value="#{user.firstname}"/>
+                </p:column>
+
+                <p:column headerText="Last name">
+                    <p:inputText id="lastNameInput" value="#{user.lastname}"/>
+                </p:column>
+
+                <p:column headerText="Email">
+                    <p:inputText id="emailInput" value="#{user.email}"/>
+                </p:column>
+                <p:column headerText="Phone number">
+                    <p:inputText id="phoneNumberUnput" value="#{user.phoneNumber}"/>
+                </p:column>
+
+                <p:column headerText="Day of birth">
+                    <h:outputText value="#{user.dateOfBirth}">
+                        <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <p:commandButton update="userList" value="Delete" icon="ui-icon-closethick"
+                                     action="#{userService.deleteUser(user.id)}"
+                                     styleClass="ui-priority-primary">
+                    </p:commandButton>
+                </p:column>
+                <p:column>
+                    <p:commandButton update="userList" value="update" icon="ui-icon-closethick"
+                                     action="#{userService.updateUser(user)}"
+                                     styleClass="ui-priority-primary">
+                    </p:commandButton>
+                </p:column>
+                <p:column>
+                    <p:commandButton update="userList" value="view" icon="ui-icon-closethick"
+                                     action="#{userService.updateUser(user)}"
+                                     styleClass="ui-priority-primary">
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <br/>
+        </h:form>
+        <h:form id="add">
+            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+                <p:outputLabel for="firstName" value="First name" />
+                <p:inputText id="firstName" value="#{userService.user.firstname}" />
+                <p:message for="firstName" />
+
+                <p:outputLabel for="lastName" value="Last name" />
+                <p:inputText id="lastName" value="#{userService.user.lastname}">
+                </p:inputText>
+                <p:message for="lastName" />
+                <p:outputLabel for="phoneNumber" value="Phone Number" />
+                <p:inputText id="phoneNumber" value="#{userService.user.phoneNumber}">
+                </p:inputText>
+                <p:message for="phoneNumber" />
+
+                <p:outputLabel for="email" value="E-Mail" />
+                <p:inputText id="email" value="#{userService.user.email}">
+                </p:inputText>
+                <p:message for="email" />
+
+                <p:outputLabel for="dayOfBirth" value="Day of birth" />
+                <p:calendar id="dayOfBirth" value="#{userService.user.dateOfBirth}" pattern="dd.MM.yyyy" mask="true">
+                    <f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+                </p:calendar>
+                <p:message for="dayOfBirth" />
+
+                <p:commandButton update="@form :users:userList" value="Add" action="#{userService.addUser()}">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
