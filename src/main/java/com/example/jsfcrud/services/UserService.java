@@ -4,12 +4,10 @@ import com.example.jsfcrud.entities.UserEntity;
 import com.example.jsfcrud.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
