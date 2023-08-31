@@ -17,7 +17,7 @@ Este projeto é um sistema de cadastro de usuários com a funcionalidade de busc
 
 ## Configuração
 
-1. Clone o repositório: `git clone https://github.com/seu-usuario/seu-repositorio.git`
+1. Clone o repositório: `git clone https://github.com/vnioliveira/Jsf-crud-spring/`
 2. Configure seu servidor para rodar a aplicação.
 3. Certifique-se de que o banco de dados está configurado corretamente.
 4. Importe o projeto em sua IDE preferida.
@@ -25,7 +25,7 @@ Este projeto é um sistema de cadastro de usuários com a funcionalidade de busc
 
 ## Uso
 
-1. Acesse a aplicação pelo navegador ou pela URL do servidor.
+1. Acesse a aplicação  pelo navegador em `http://localhost:9090/user/list.xhtml` ou pela URL do servidor.
 2. Use a funcionalidade de busca para localizar usuários por nome.
 3. Preencha os campos do formulário para cadastrar um novo usuário.
 4. Utilize a funcionalidade de busca de CEP para obter informações de endereço.
