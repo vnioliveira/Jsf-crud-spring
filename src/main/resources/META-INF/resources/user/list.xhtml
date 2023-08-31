@@ -79,6 +79,11 @@
                 </p:inputText>
                 <p:message for="username"/>
 
+                <p:outputLabel for="cep" value="CEP"/>
+                <p:inputText id="cep" value="#{userService.user.cep}">
+                </p:inputText>
+                <p:message for="cep"/>
+
                 <p:outputLabel for="senha" value="Senha"/>
                 <p:password id="senha" value="#{userService.user.senha}" feedback="true"/>
                 <p:message for="senha"/>
@@ -116,7 +121,6 @@
                         </p:selectOneButton>
                     </h:form>
                 </div>
-
                     <h:panelGrid columns="2">
                         <label>Cep:</label>
                         <br />
@@ -141,6 +145,7 @@
                         <h:commandButton value="Busca CEP" action="#{cep.buscaCep}" />
                     </h:panelGrid>
 
+                <h:inputHidden id="userCepHidden" value="#{userService.user.cep}" rendered="false" />
 
                 <p:commandButton update="@form :users:userList" value="Add" action="#{userService.addUser}">
                 </p:commandButton>

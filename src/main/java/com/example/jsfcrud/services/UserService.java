@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -21,9 +20,10 @@ import java.util.stream.IntStream;
 
 @ManagedBean
 @ViewScoped
-@RequiredArgsConstructor
+
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class UserService {
 
     private String mask;
@@ -36,10 +36,12 @@ public class UserService {
     @Getter
     private UserEntity user = new UserEntity();
 
+
     public void addUser() {
         try {
             if (UserValidationUtils.isUserAbove18(user)) {
                 userRepository.save(user);
+
                 users.add(user);
                 user = new UserEntity();
             } else {
@@ -52,26 +54,27 @@ public class UserService {
         }
     }
 
-    public void updateUser(UserEntity userEntity){
-        if(userEntity.getId() == 0) return;
+    public void updateUser(UserEntity userEntity) {
+        if (userEntity.getId() == 0) return;
         userRepository.save(userEntity);
         int j = IntStream.range(0, users.size())
-                .filter(i -> userEntity.getId()== users.get(i).getId())
+                .filter(i -> userEntity.getId() == users.get(i).getId())
                 .findFirst().getAsInt();
         users.set(j, userEntity);
     }
-    public void deleteUser(int userId){
+
+    public void deleteUser(int userId) {
         userRepository.deleteById(userId);
         users = users.stream().filter(userEntity -> userEntity.getId() != userId).collect(Collectors.toList());
     }
 
     @PostConstruct
-    public void getAllUser(){
+    public void getAllUser() {
         users = userRepository.findAll();
     }
 
     public void searchUsers() {
-        users =  userRepository.searchUsersByName(pesquisaNome);
+        users = userRepository.searchUsersByName(pesquisaNome);
     }
 
     // Método para atualizar a máscara com base no tipo de pessoa selecionado
