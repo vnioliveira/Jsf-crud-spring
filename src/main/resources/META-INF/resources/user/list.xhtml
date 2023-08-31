@@ -83,11 +83,6 @@
                 <p:password id="senha" value="#{userService.user.senha}" feedback="true"/>
                 <p:message for="senha"/>
 
-                <p:outputLabel for="cep" value="Cep"/>
-                <p:inputText id="cep" value="#{userService.user.cep}">
-                </p:inputText>
-                <p:message for="cep"/>
-
                 <p:outputLabel for="email" value="E-Mail"/>
                 <p:inputText id="email" value="#{userService.user.email}">
                 </p:inputText>
@@ -99,19 +94,6 @@
                     <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                 </p:calendar>
                 <p:message for="dataNascimento"/>
-
-                <!--                <div class="card">-->
-                <!--                    <p:selectOneButton value="#{userService.user.tipoUsuario}">-->
-                <!--                        <f:selectItem itemLabel="CPF" itemValue="T"/>-->
-                <!--                        <f:selectItem itemLabel="CNPJ" itemValue="J"/>-->
-                <!--                    </p:selectOneButton>-->
-
-                <!--                </div>-->
-
-                <!--                <p:outputLabel for="cpf" value="CPF"/>-->
-                <!--                <p:inputText id="cpf" value="#{userService.user.cpfCnpj}" styleClass="cpf-cnpj-field">-->
-                <!--                </p:inputText>-->
-                <!--                <p:message for="cpf"/>-->
 
                 <div class="card">
                     <h:panelGroup id="radioAndMask">
@@ -134,6 +116,31 @@
                         </p:selectOneButton>
                     </h:form>
                 </div>
+
+                    <h:panelGrid columns="2">
+                        <label>Cep:</label>
+                        <br />
+                        <h:inputText value="#{cep.cep}" />
+                        <br />
+                        <label>Rua:</label>
+                        <br />
+                        <h:inputText value="#{cep.rua}" />
+                        <br />
+                        <label>Bairro:</label>
+                        <br />
+                        <h:inputText value="#{cep.bairro}" />
+                        <br />
+                        <label>Cidade:</label>
+                        <br />
+                        <h:inputText value="#{cep.cidade}" />
+                        <br />
+                        <label>Estado:</label>
+                        <br />
+                        <h:inputText value="#{cep.estado}" />
+                        <br />
+                        <h:commandButton value="Busca CEP" action="#{cep.buscaCep}" />
+                    </h:panelGrid>
+
 
                 <p:commandButton update="@form :users:userList" value="Add" action="#{userService.addUser}">
                 </p:commandButton>
