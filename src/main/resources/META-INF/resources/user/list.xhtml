@@ -6,37 +6,53 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:head>
-    </h:head>
+<h:head>
 
-    <h:body style="margin-left:50px">
+
+</h:head>
+<h:body style="margin-left:50px">
+    <p:panel header="Cadastro de Usuário">
+
         <h:form id="users">
-            <p:growl id="growl" sticky="true" />
+            <p:outputLabel for="searchInput" value="Filtrar por nome: "/>
+            <p:inputText id="searchInput" value="#{userService.pesquisaNome}">
+                <p:ajax event="keyup" listener="#{userService.searchUsers()}" update="userList"/>
+            </p:inputText>
+
+            <p:growl id="growl" sticky="true"/>
             <p:dataTable id="userList" var="user" value="#{userService.users}">
-                <p:column headerText="Id">
-                    <h:outputText value="#{user.id}"/>
+
+                <p:column headerText="nome">
+                    <p:inputText id="nomeInput" value="#{user.nome}"/>
                 </p:column>
 
-                <p:column headerText="First name">
-                    <p:inputText id="firstNameInput" value="#{user.firstname}"/>
+                <p:column headerText="username">
+                    <p:inputText id="usernameInput" value="#{user.username}"/>
                 </p:column>
 
-                <p:column headerText="Last name">
-                    <p:inputText id="lastNameInput" value="#{user.lastname}"/>
+                <p:column headerText="cep">
+                    <p:inputText id="cepInput" value="#{user.cep}"/>
                 </p:column>
+
 
                 <p:column headerText="Email">
                     <p:inputText id="emailInput" value="#{user.email}"/>
                 </p:column>
-                <p:column headerText="Phone number">
-                    <p:inputText id="phoneNumberUnput" value="#{user.phoneNumber}"/>
-                </p:column>
 
-                <p:column headerText="Day of birth">
-                    <h:outputText value="#{user.dateOfBirth}">
+                <p:column headerText="Data de Nascimento">
+                    <h:outputText value="#{user.dataNascimento}">
                         <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                     </h:outputText>
                 </p:column>
+
+                <p:column headerText="cpf/Cnpj">
+                    <p:inputText id="cpfCnpjInput" value="#{user.cpfCnpj}"/>
+                </p:column>
+
+                <p:column headerText="sexo">
+                    <p:inputText id="sexoInput" value="#{user.sexo}"/>
+                </p:column>
+
                 <p:column>
                     <p:commandButton update="userList" value="Delete" icon="ui-icon-closethick"
                                      action="#{userService.deleteUser(user.id)}"
@@ -48,39 +64,86 @@
                                      action="#{userService.updateUser(user)}"
                                      styleClass="ui-priority-primary">
                     </p:commandButton>
-                </p:column>              
+                </p:column>
             </p:dataTable>
             <br/>
         </h:form>
         <h:form id="add">
             <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
-                <p:outputLabel for="firstName" value="First name" />
-                <p:inputText id="firstName" value="#{userService.user.firstname}" />
-                <p:message for="firstName" />
+                <p:outputLabel for="firstName" value="First name"/>
+                <p:inputText id="firstName" value="#{userService.user.nome}"/>
+                <p:message for="firstName"/>
 
-                <p:outputLabel for="lastName" value="Last name" />
-                <p:inputText id="lastName" value="#{userService.user.lastname}">
+                <p:outputLabel for="username" value="Username"/>
+                <p:inputText id="username" value="#{userService.user.username}">
                 </p:inputText>
-                <p:message for="lastName" />
-                <p:outputLabel for="phoneNumber" value="Phone Number" />
-                <p:inputText id="phoneNumber" value="#{userService.user.phoneNumber}">
-                </p:inputText>
-                <p:message for="phoneNumber" />
+                <p:message for="username"/>
 
-                <p:outputLabel for="email" value="E-Mail" />
+                <p:outputLabel for="senha" value="Senha"/>
+                <p:password id="senha" value="#{userService.user.senha}" feedback="true"/>
+                <p:message for="senha"/>
+
+                <p:outputLabel for="cep" value="Cep"/>
+                <p:inputText id="cep" value="#{userService.user.cep}">
+                </p:inputText>
+                <p:message for="cep"/>
+
+                <p:outputLabel for="email" value="E-Mail"/>
                 <p:inputText id="email" value="#{userService.user.email}">
                 </p:inputText>
-                <p:message for="email" />
+                <p:message for="email"/>
 
-                <p:outputLabel for="dayOfBirth" value="Day of birth" />
-                <p:calendar id="dayOfBirth" value="#{userService.user.dateOfBirth}" pattern="dd.MM.yyyy" mask="true">
-                    <f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+                <p:outputLabel for="dataNascimento" value="Data de Nascimento"/>
+                <p:calendar id="dataNascimento" value="#{userService.user.dataNascimento}" pattern="dd.MM.yyyy"
+                            mask="true">
+                    <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                 </p:calendar>
-                <p:message for="dayOfBirth" />
+                <p:message for="dataNascimento"/>
+
+<!--                <div class="card">-->
+<!--                    <p:selectOneButton value="#{userService.user.tipoUsuario}">-->
+<!--                        <f:selectItem itemLabel="CPF" itemValue="T"/>-->
+<!--                        <f:selectItem itemLabel="CNPJ" itemValue="J"/>-->
+<!--                    </p:selectOneButton>-->
+
+<!--                </div>-->
+
+<!--                <p:outputLabel for="cpf" value="CPF"/>-->
+<!--                <p:inputText id="cpf" value="#{userService.user.cpfCnpj}" styleClass="cpf-cnpj-field">-->
+<!--                </p:inputText>-->
+<!--                <p:message for="cpf"/>-->
+
+                <div class="card">
+                    <h:panelGroup id="radioAndMask">
+                        <h:selectOneRadio value="#{userService.user.tipoUsuario}">
+                            <f:selectItem itemValue="fisica" itemLabel="Pessoa Física" />
+                            <f:selectItem itemValue="juridica" itemLabel="Pessoa Jurídica" />
+                            <p:ajax update="radioAndMask" listener="#{userService.updateMask}" />
+                        </h:selectOneRadio>
+
+                        <h:outputLabel value="#{userService.user.tipoUsuario eq 'fisica' ? 'CPF:' : 'CNPJ:'}" />
+                        <p:inputMask id="cpfCnpjInputs" value="#{userService.user.cpfCnpj}" mask="#{userService.mask}" />
+                    </h:panelGroup>
+                </div>
+                <div class="card">
+                    <h:form>
+                        <h5 class="mt-0">Sexo</h5>
+                        <p:selectOneButton value="#{userService.user.sexo}">
+                            <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                            <f:selectItem itemLabel="Feminino" itemValue="F"/>
+                        </p:selectOneButton>
+                    </h:form>
+                </div>
 
                 <p:commandButton update="@form :users:userList" value="Add" action="#{userService.addUser()}">
                 </p:commandButton>
+                <p:dialog id="errorDialog" widgetVar="errorDialog" header="Erro ao cadastrar Usuário"
+                          modal="true" draggable="false" resizable="false">
+                    <p:messages/>
+                </p:dialog>
+
             </h:panelGrid>
         </h:form>
-    </h:body>
+    </p:panel>
+</h:body>
 </html>
